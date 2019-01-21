@@ -320,7 +320,53 @@
       
         
           
-            
+            <ul>
+<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
+<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
+<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
+<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
+</ul>
+<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/description/" target="_blank" rel="noopener">4. Median of Two Sorted Arrays</a></p>
+<p>There are two sorted arrays <code>nums1</code> and <code>nums2</code> of size m and n respectively.</p>
+<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+<p>You may assume <code>nums1</code> and <code>nums2</code> cannot be both empty.</p>
+<p>Example 1:</p>
+<blockquote>
+<p>nums1 = [1, 3]<br> nums2 = [2]</p>
+</blockquote>
+<p>The median is 2.0<br>Example 2:</p>
+<blockquote>
+<p>nums1 = [1, 2]<br> nums2 = [3, 4]</p>
+<p>The median is (2 + 3)/2 = 2.5</p>
+</blockquote>
+<p>首先，这两个数组是排序的，最初的方法是把这两个数组merge了，然后直接在merge后的数组里取中位数，这个方法的事件复杂度是O(n), 空间复杂度是O(n);</p>
+<p>进一步优化的话，因为都是排序数组，因此可以考虑二分。假设一个数组长度是a，另一个是b，那么我们要找的中位数一定在一个数组和一个数组的前半部之间，这个相当于我们的第一次二分，我们要去掉更大的那个1/4。于是我们每一次选aStart + k/2位置的数aMid与bStart + k/2位置的数bMid，对比这两个中位数，如果aMid &gt; bMid, 那么大于aMid的数中一定不可能有我们想要的中位数，那么可以舍去，反之同理。</p>
+<p>由于有一种可能是中位数是两数的平均数，所以我们要获得两个中位数，保证我们选取的中位数是正确的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = nums1.length, b = nums2.length;</span><br><span class="line">        <span class="keyword">int</span> l = (a + b + <span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> r = (a + b + <span class="number">2</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (helper (nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, l) + helper (nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, r))/<span class="number">2.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> aStart, <span class="keyword">int</span>[] b, <span class="keyword">int</span> bStart, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (aStart &gt; a.length - <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) b[bStart + k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bStart &gt; b.length - <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) a[aStart + k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) Math.min(a[aStart], b[bStart]);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> aMid = Integer.MAX_VALUE, bMid = Integer.MAX_VALUE;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (aStart + k/<span class="number">2</span> - <span class="number">1</span> &lt; a.length) aMid = a[aStart + k/<span class="number">2</span> -<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bStart + k/<span class="number">2</span> - <span class="number">1</span> &lt; b.length) bMid = b[bStart + k/<span class="number">2</span> -<span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (aMid &gt; bMid) <span class="keyword">return</span> helper (a, aStart, b, bStart + k/<span class="number">2</span>, k - k/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> helper(a, aStart + k/<span class="number">2</span>, b, bStart, k - k/<span class="number">2</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.freecodecamp.org/an-introduction-to-progressive-web-apps-6aa75f32816f" target="_blank" rel="noopener">An introduction to Progressive Web Apps</a></p>
+<p>这篇文章介绍了什么是PWA，它的兴起的原因，好处以及主要应用技术。</p>
+<p>好处有</p>
+<ol>
+<li>PWA更加轻量。传统手机App至少要200MB，PWA确实在KB级别。</li>
+<li>不需要根据手机系统而编程。</li>
+<li>访问或者获得的成本比较低（针对于用户来说，不需要下载App）</li>
+<li>发布和更新的cost更低了。</li>
+<li>对于深链接支持度比传统App-store app要好。</li>
+</ol>
+<p>核心概念</p>
+<ol>
+<li>Responsive，UI能够适应各种设备界面</li>
+<li>App-like feel，更加像一个application而不是一个网页。</li>
+<li>Offline support，使用设备容量来储存offline的使用。</li>
+<li>Installable，设备浏览器会提示用户安装app</li>
+<li>Re-engaging，一旦安装App弹出提示指示用户使用App</li>
+<li>Discoverable，搜索引擎和搜索引擎优化能够带来的用户量远多于App store所带来的用户量。</li>
+<li>Fresh，一旦上线，app就能够自我更新和内容更新。</li>
+<li>Safe，使用HTTPS</li>
+<li>Prograssive，可以在任何设备上访问，甚至是很旧的设备，即使可能会少一些features</li>
+<li>Linkable，通过URLs可以很容易链接。</li>
+</ol>
+<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p><a href="https://itnext.io/lessons-from-a-long-week-with-firebase-b433ce8ee49e" target="_blank" rel="noopener">Lessons from a small Firebase project.</a></p>
+
           
         
       
@@ -439,9 +485,45 @@
       
         
           
-            <p>Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。<br>Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。<br>Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。<br>Share：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</p>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.com/s/the-upgrade/the-technology-that-will-define-2019-48c041e98532" target="_blank" rel="noopener">https://medium.com/s/the-upgrade/the-technology-that-will-define-2019-48c041e98532</a></p>
-<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3>
+            <ul>
+<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
+<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
+<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
+<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
+</ul>
+<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="https://leetcode.com/problems/lru-cache/description/" target="_blank" rel="noopener">146. LRU Cache</a><br>Design and implement a data structure for <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU" target="_blank" rel="noopener">Least Recently Used (LRU) cache</a>. It should support the following operations: <code>get</code> and <code>put</code>.</p>
+<p><code>get(key)</code> - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br><code>put(key, value)</code> - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
+<p>Follow up:<br>Could you do both operations in O(1) time complexity?</p>
+<p>Example:</p>
+<blockquote>
+<p>LRUCache cache = new LRUCache( 2 /<em><br>capacity </em>/ );</p>
+</blockquote>
+<p>cache.put(1, 1);<br>cache.put(2, 2);<br>cache.get(1);       // returns 1<br>cache.put(3, 3);    // evicts key 2<br>cache.get(2);       // returns -1 (not found)<br>cache.put(4, 4);    // evicts key 1<br>cache.get(1);       // returns -1 (not found)<br>cache.get(3);       // returns 3<br>cache.get(4);       // returns 4</p>
+<p>这个题的关键是亮点，一个是<code>put</code>和<code>get</code>操作，这个我们只能用HashMap来存Key-Value pair。 另外一个是我们有capacity，要及时vanish不常访问的数据，同时要把最近访问的数据移到前面，那么可以使用的数据结构就是double LinkedList。</p>
+<p>这道题的原理其实很简单，用hashmap来存key和对应的node，用一个counter来管理是否超过内存容量。最麻烦的可能就是对链表的修改，可以用两个dummy variable head和tail来指向开始和末尾，head后面跟的是most recent visited，tail前面所指是latest visited。当插入新的元素时，直接加到head后面，如果容量超过capacity就删除tail前面的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> val;</span><br><span class="line">        <span class="keyword">int</span> key;</span><br><span class="line">        Node prev;</span><br><span class="line">        Node next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node head;</span><br><span class="line">    Node tail;</span><br><span class="line">    <span class="keyword">int</span> capacity;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    HashMap&lt;Integer, Node&gt; map;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">        <span class="keyword">this</span>.count = <span class="number">0</span>;</span><br><span class="line">        map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">this</span>.head = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="keyword">this</span>.tail = <span class="keyword">new</span> Node();</span><br><span class="line">        </span><br><span class="line">        head.prev = <span class="keyword">null</span>;</span><br><span class="line">        tail.next = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        head.next = tail;</span><br><span class="line">        tail.prev = head;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addNode</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        node.prev = head;</span><br><span class="line">        node.next = head.next;</span><br><span class="line">        head.next = node;</span><br><span class="line">        node.next.prev = node;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeNode</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        node.prev.next = node.next;</span><br><span class="line">        node.next.prev = node.prev;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node <span class="title">popTail</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Node node = tail.prev;</span><br><span class="line">        removeNode(node);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToFront</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        removeNode(node);</span><br><span class="line">        addNode(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        Node temp = map.get(key);</span><br><span class="line">        <span class="keyword">if</span>(temp == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        moveToFront(temp);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> temp.val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        Node temp = map.get(key);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(temp == <span class="keyword">null</span>)&#123;</span><br><span class="line">            temp = <span class="keyword">new</span> Node();</span><br><span class="line">            temp.key = key;</span><br><span class="line">            temp.val = value;</span><br><span class="line">            </span><br><span class="line">            map.put(key, temp);</span><br><span class="line">            addNode(temp);</span><br><span class="line">            </span><br><span class="line">            count ++;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(count &gt; capacity)&#123;</span><br><span class="line">                Node node = popTail();</span><br><span class="line">                map.remove(node.key);</span><br><span class="line">                count --;</span><br><span class="line">            &#125;</span><br><span class="line">              </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.val = value;</span><br><span class="line">            moveToFront(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.com/s/the-upgrade/the-technology-that-will-define-2019-48c041e98532" target="_blank" rel="noopener">The Technology That Will Define 2019</a><br>作者根据2018年的流行趋势以及政策变化，提出了10个可能在2019年流行的技术趋势。</p>
+<ol>
+<li>加密数字货币: 作者指出2018年比特币从最高价格几乎到达17000美金后来降低到4000美金一下，但是并不代表这个是加密货币的终结。在2018年我们了解了加密货币的技术概念。这些在2019年将可能会广泛应用在银行，商业和媒体等领域。</li>
+<li>屏幕时间服务：对社交媒体的过渡使用，同时在2018年发生的事故也让人们丧失了对社交媒体的信任。于是2019年，可能会降低对社交媒体的热情。此外，Apple的screen time，Android的Dashboard和像Hold这样的App的出现也是破冰标志。</li>
+<li>网络战：去年纰露的俄罗斯政府操纵2016选举的事情，还是有很大影响的。</li>
+<li>技术管制：2018年末FB数据泄漏事件的影响，美国开始向欧洲学习。2019政府拨款修订个人信息隐私条例。</li>
+<li>电动无人车：大部分的州已经出台了无人车规范，很多新车型也加入了可以完成自动驾驶的模块。但是，即便如此，在2018年，自动驾驶的传播度还是有限。在2019年可能是一个巨大的转折点。</li>
+<li>Apple移动设备领导地位有所动摇；</li>
+<li>5G技术</li>
+<li>机器人</li>
+<li>人脸识别与操作</li>
+<li>AR技术</li>
+</ol>
+<p>另外，可能的预测：</p>
+<ol>
+<li>USB-C可能会被应用到iPhone的生产上</li>
+<li>OTT流媒体服务在2019会继续扩大。</li>
+<li>2018年不道德地使用CRISPR技术进行基因编辑的实验可能只是个开始，2019可能会有更多的基因编辑的发现。</li>
+<li>中国拒绝其他国家的垃圾回收这一举措，可能促使垃圾处理技术的开发。</li>
+</ol>
+<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p><a href="https://medium.com/netflix-techblog/netflix-edge-load-balancing-695308b5548c" target="_blank" rel="noopener">Rethinking Netflix’s Edge Load Balancing</a><br>这篇文章介绍了Zuul 2的开发原因，原理和如何运作的。从zuul到zuul 2的改进等。</p>
+
           
         
       
@@ -560,7 +642,13 @@
       
         
           
-            <h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="leetcode.com/problems/trapping-rain-water/">Leetcode 42. Trapping Rain Water</a></p>
+            <ul>
+<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
+<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
+<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
+<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
+</ul>
+<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="leetcode.com/problems/trapping-rain-water/">Leetcode 42. Trapping Rain Water</a></p>
 <p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.<br><img src="https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png" alt="Marcos"><br>The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image.</p>
 <blockquote>
 <p>Example:<br>  Input: [0,1,0,2,1,0,1,3,2,1,2,1]<br>  Output: 6</p>
