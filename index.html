@@ -320,16 +320,20 @@
       
         
           
-            <hr>
-<ul>
-<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
-<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
-<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
-<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
-</ul>
-<hr>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><h3 id="Tip"><a href="#Tip" class="headerlink" title="Tip"></a>Tip</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3>
           
+
+Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。
+Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。
+Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2019/01/28/2019-01-28/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -447,33 +451,20 @@
       
         
           
-            <hr>
-<ul>
-<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
-<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
-<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
-<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
-</ul>
-<hr>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener">124. Binary Tree Maximum Path Sum</a><br>Given a non-empty binary tree, find the maximum path sum.</p>
-<p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.<br><img src="/FangRu.io/2019/01/22/2019-01-21/2019-01-21-algorithm.png"> </p>
-<p>题目分析：<br>这道题是给一个非空的二叉树，找到最大的路径和。路径当中最少有一个节点，且不一定必须经过根节点。<br>从路径来看，这个有五种情况：</p>
-<ol>
-<li>左右子树都不存在，返回根节点；</li>
-<li>左右子树为负，根节点为最大，返回根节点；</li>
-<li>根节为负，左子树路径或右子树路径最大；</li>
-<li>根节点非负，从左右子树当中选一个作为路径一部分，包括根节点；</li>
-<li>路径不经过根节点。</li>
-</ol>
-<p>在一开始解题时有些case by case地解题，先给几个wrong answer的解法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Wrong solution 1</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        max = Integer.MIN_VALUE;</span><br><span class="line">        getValue(root);</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left = getValue(root.left);</span><br><span class="line">        <span class="keyword">int</span> right = getValue(root.right);</span><br><span class="line">        </span><br><span class="line">        max = Math.max(max, root.val + right + left);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root.val + Math.max(right, left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Case [2,-1]. Output: 1, Expected: 2</span></span><br><span class="line"><span class="comment">// 这个出错的case是，情况2，左右子树为负数，根节点为最大。</span></span><br></pre></td></tr></table></figure></p>
-<p>后来wrong answer后，觉得，会有三种情况，需要左子树，需要右子树，或者都不需要，或者都需要。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        max = Integer.MIN_VALUE;</span><br><span class="line">        getValue(root);</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left = getValue(root.left);</span><br><span class="line">        <span class="keyword">int</span> right = getValue(root.right);</span><br><span class="line">        </span><br><span class="line">        max = Math.max(max, root.val);</span><br><span class="line">        max = Math.max(max, root.val + right);</span><br><span class="line">        max = Math.max(max, root.val + left);</span><br><span class="line">        max = Math.max(max, root.val + right + left);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root.val + Math.max(right, left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrong case [9,6,-3,null,null,-6,2,null,null,2,null,-6,-6,-6],</span></span><br><span class="line"><span class="comment">// output: 15</span></span><br><span class="line"><span class="comment">// expected: 16</span></span><br></pre></td></tr></table></figure>
-<p>直观来看一下这个树：<br><img src="/FangRu.io/2019/01/22/2019-01-21/2019-01-21-algorithm-wa2.png"><br>我的解法只能得到<code>9-6</code>这条路径，实际上最大的应该是<code>6-9-(-3)-2-2</code>这一条路径。于是我发现，我的解法中的一个问题是在最后返回当前root值加上左子或右子树值时，忽略了当左右子树都为负数的情况, 导致我在计算 ‘[(-3)-2-2]’这条通路时会把最下面的2的两个子树带上，在最后返回给上一级（上一个2）时的情况是[2-(-6)]和[2-(-6)-(-6)]当中的最大，却少了[2]这个实际上的最大。<br>于是改进<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        max = Integer.MIN_VALUE;</span><br><span class="line">        getValue(root);</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left = getValue(root.left);</span><br><span class="line">        <span class="keyword">int</span> right = getValue(root.right);</span><br><span class="line">        max = Math.max(max, root.val);</span><br><span class="line">        max = Math.max(max, root.val + right);</span><br><span class="line">        max = Math.max(max, root.val + left);</span><br><span class="line">        max = Math.max(max, root.val + right + left);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root.val + Math.max(<span class="number">0</span>, Math.max(right, left));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>改进代码，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        max = Integer.MIN_VALUE;</span><br><span class="line">        getValue(root);</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// make sure get left and right value non-negative</span></span><br><span class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, getValue(root.left));</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, getValue(root.right));</span><br><span class="line">        </span><br><span class="line">        max = Math.max(max, root.val + right + left);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root.val + Math.max(right, left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://towardsdatascience.com/spark-ai-summit-2018-overview-7c5a8d7be296" target="_blank" rel="noopener">Spark + AI Summit 2018 — Overview</a><br><a href="https://blog.bitsrc.io/using-airtable-as-a-handy-cloud-storage-for-your-apps-ae6cce0efe11" target="_blank" rel="noopener">Using Airtable as a Handy Cloud Storage for your Apps</a><br><a href="https://medium.freecodecamp.org/how-im-working-to-overcome-my-struggles-as-a-junior-developer-a6ab18ac29b2" target="_blank" rel="noopener">How I’m working to overcome my struggles as a junior developer</a><br><a href="https://medium.freecodecamp.org/a-beginners-guide-to-graphql-86f849ce1bec" target="_blank" rel="noopener">A Beginner’s Guide to GraphQL</a><br><a href="https://medium.mybridge.co/web-development-open-source-of-the-month-v-dec-2018-57ec5828a6e" target="_blank" rel="noopener">Web Development Open Source of the Month (v.Dec 2018)</a><br><a href="https://medium.mybridge.co/learn-web-development-from-top-50-articles-for-the-past-year-v-2019-f589aa4d82e5" target="_blank" rel="noopener">Learn Web Development from Top 50 Articles for the Past Year (v.2019)</a></p>
-<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p><a href="https://medium.freecodecamp.org/trending-web-technologies-to-follow-in-2019-fc382b09198b" target="_blank" rel="noopener">Interesting Web Technologies to follow in 2019</a></p>
-
           
+
+Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。
+Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。
+Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2019/01/22/2019-01-21/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -591,56 +582,20 @@
       
         
           
-            <hr>
-<ul>
-<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
-<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
-<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
-<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
-</ul>
-<hr>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/description/" target="_blank" rel="noopener">4. Median of Two Sorted Arrays</a></p>
-<p>There are two sorted arrays <code>nums1</code> and <code>nums2</code> of size m and n respectively.</p>
-<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-<p>You may assume <code>nums1</code> and <code>nums2</code> cannot be both empty.</p>
-<p>Example 1:</p>
-<blockquote>
-<p>nums1 = [1, 3]<br> nums2 = [2]</p>
-</blockquote>
-<p>The median is 2.0<br>Example 2:</p>
-<blockquote>
-<p>nums1 = [1, 2]<br> nums2 = [3, 4]</p>
-<p>The median is (2 + 3)/2 = 2.5</p>
-</blockquote>
-<p>首先，这两个数组是排序的，最初的方法是把这两个数组merge了，然后直接在merge后的数组里取中位数，这个方法的事件复杂度是O(n), 空间复杂度是O(n);</p>
-<p>进一步优化的话，因为都是排序数组，因此可以考虑二分。假设一个数组长度是a，另一个是b，那么我们要找的中位数一定在一个数组和一个数组的前半部之间，这个相当于我们的第一次二分，我们要去掉更大的那个1/4。于是我们每一次选aStart + k/2位置的数aMid与bStart + k/2位置的数bMid，对比这两个中位数，如果aMid &gt; bMid, 那么大于aMid的数中一定不可能有我们想要的中位数，那么可以舍去，反之同理。</p>
-<p>由于有一种可能是中位数是两数的平均数，所以我们要获得两个中位数，保证我们选取的中位数是正确的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a = nums1.length, b = nums2.length;</span><br><span class="line">        <span class="keyword">int</span> l = (a + b + <span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> r = (a + b + <span class="number">2</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (helper (nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, l) + helper (nums1, <span class="number">0</span>, nums2, <span class="number">0</span>, r))/<span class="number">2.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> aStart, <span class="keyword">int</span>[] b, <span class="keyword">int</span> bStart, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (aStart &gt; a.length - <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) b[bStart + k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bStart &gt; b.length - <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) a[aStart + k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">1</span>) <span class="keyword">return</span> (<span class="keyword">double</span>) Math.min(a[aStart], b[bStart]);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> aMid = Integer.MAX_VALUE, bMid = Integer.MAX_VALUE;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (aStart + k/<span class="number">2</span> - <span class="number">1</span> &lt; a.length) aMid = a[aStart + k/<span class="number">2</span> -<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (bStart + k/<span class="number">2</span> - <span class="number">1</span> &lt; b.length) bMid = b[bStart + k/<span class="number">2</span> -<span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (aMid &gt; bMid) <span class="keyword">return</span> helper (a, aStart, b, bStart + k/<span class="number">2</span>, k - k/<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> helper(a, aStart + k/<span class="number">2</span>, b, bStart, k - k/<span class="number">2</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.freecodecamp.org/an-introduction-to-progressive-web-apps-6aa75f32816f" target="_blank" rel="noopener">An introduction to Progressive Web Apps</a></p>
-<p>这篇文章介绍了什么是PWA，它的兴起的原因，好处以及主要应用技术。</p>
-<p>好处有</p>
-<ol>
-<li>PWA更加轻量。传统手机App至少要200MB，PWA确实在KB级别。</li>
-<li>不需要根据手机系统而编程。</li>
-<li>访问或者获得的成本比较低（针对于用户来说，不需要下载App）</li>
-<li>发布和更新的cost更低了。</li>
-<li>对于深链接支持度比传统App-store app要好。</li>
-</ol>
-<p>核心概念</p>
-<ol>
-<li>Responsive，UI能够适应各种设备界面</li>
-<li>App-like feel，更加像一个application而不是一个网页。</li>
-<li>Offline support，使用设备容量来储存offline的使用。</li>
-<li>Installable，设备浏览器会提示用户安装app</li>
-<li>Re-engaging，一旦安装App弹出提示指示用户使用App</li>
-<li>Discoverable，搜索引擎和搜索引擎优化能够带来的用户量远多于App store所带来的用户量。</li>
-<li>Fresh，一旦上线，app就能够自我更新和内容更新。</li>
-<li>Safe，使用HTTPS</li>
-<li>Prograssive，可以在任何设备上访问，甚至是很旧的设备，即使可能会少一些features</li>
-<li>Linkable，通过URLs可以很容易链接。</li>
-</ol>
-<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p><a href="https://itnext.io/lessons-from-a-long-week-with-firebase-b433ce8ee49e" target="_blank" rel="noopener">Lessons from a small Firebase project.</a></p>
-
           
+
+Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。
+Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。
+Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2019/01/20/2019-01-14/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -758,48 +713,20 @@
       
         
           
-            <hr>
-<ul>
-<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
-<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
-<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
-<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
-</ul>
-<hr>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="https://leetcode.com/problems/lru-cache/description/" target="_blank" rel="noopener">146. LRU Cache</a><br>Design and implement a data structure for <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU" target="_blank" rel="noopener">Least Recently Used (LRU) cache</a>. It should support the following operations: <code>get</code> and <code>put</code>.</p>
-<p><code>get(key)</code> - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br><code>put(key, value)</code> - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
-<p>Follow up:<br>Could you do both operations in O(1) time complexity?</p>
-<p>Example:</p>
-<blockquote>
-<p>LRUCache cache = new LRUCache( 2 /<em><br>capacity </em>/ );</p>
-</blockquote>
-<p>cache.put(1, 1);<br>cache.put(2, 2);<br>cache.get(1);       // returns 1<br>cache.put(3, 3);    // evicts key 2<br>cache.get(2);       // returns -1 (not found)<br>cache.put(4, 4);    // evicts key 1<br>cache.get(1);       // returns -1 (not found)<br>cache.get(3);       // returns 3<br>cache.get(4);       // returns 4</p>
-<p>这个题的关键是亮点，一个是<code>put</code>和<code>get</code>操作，这个我们只能用HashMap来存Key-Value pair。 另外一个是我们有capacity，要及时vanish不常访问的数据，同时要把最近访问的数据移到前面，那么可以使用的数据结构就是double LinkedList。</p>
-<p>这道题的原理其实很简单，用hashmap来存key和对应的node，用一个counter来管理是否超过内存容量。最麻烦的可能就是对链表的修改，可以用两个dummy variable head和tail来指向开始和末尾，head后面跟的是most recent visited，tail前面所指是latest visited。当插入新的元素时，直接加到head后面，如果容量超过capacity就删除tail前面的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> </span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> val;</span><br><span class="line">        <span class="keyword">int</span> key;</span><br><span class="line">        Node prev;</span><br><span class="line">        Node next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Node head;</span><br><span class="line">    Node tail;</span><br><span class="line">    <span class="keyword">int</span> capacity;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    HashMap&lt;Integer, Node&gt; map;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.capacity = capacity;</span><br><span class="line">        <span class="keyword">this</span>.count = <span class="number">0</span>;</span><br><span class="line">        map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">this</span>.head = <span class="keyword">new</span> Node();</span><br><span class="line">        <span class="keyword">this</span>.tail = <span class="keyword">new</span> Node();</span><br><span class="line">        </span><br><span class="line">        head.prev = <span class="keyword">null</span>;</span><br><span class="line">        tail.next = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        head.next = tail;</span><br><span class="line">        tail.prev = head;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addNode</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        node.prev = head;</span><br><span class="line">        node.next = head.next;</span><br><span class="line">        head.next = node;</span><br><span class="line">        node.next.prev = node;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeNode</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        node.prev.next = node.next;</span><br><span class="line">        node.next.prev = node.prev;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node <span class="title">popTail</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Node node = tail.prev;</span><br><span class="line">        removeNode(node);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToFront</span><span class="params">(Node node)</span></span>&#123;</span><br><span class="line">        removeNode(node);</span><br><span class="line">        addNode(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</span><br><span class="line">        Node temp = map.get(key);</span><br><span class="line">        <span class="keyword">if</span>(temp == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        moveToFront(temp);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> temp.val;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        Node temp = map.get(key);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(temp == <span class="keyword">null</span>)&#123;</span><br><span class="line">            temp = <span class="keyword">new</span> Node();</span><br><span class="line">            temp.key = key;</span><br><span class="line">            temp.val = value;</span><br><span class="line">            </span><br><span class="line">            map.put(key, temp);</span><br><span class="line">            addNode(temp);</span><br><span class="line">            </span><br><span class="line">            count ++;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(count &gt; capacity)&#123;</span><br><span class="line">                Node node = popTail();</span><br><span class="line">                map.remove(node.key);</span><br><span class="line">                count --;</span><br><span class="line">            &#125;</span><br><span class="line">              </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.val = value;</span><br><span class="line">            moveToFront(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.com/s/the-upgrade/the-technology-that-will-define-2019-48c041e98532" target="_blank" rel="noopener">The Technology That Will Define 2019</a><br>作者根据2018年的流行趋势以及政策变化，提出了10个可能在2019年流行的技术趋势。</p>
-<ol>
-<li>加密数字货币: 作者指出2018年比特币从最高价格几乎到达17000美金后来降低到4000美金一下，但是并不代表这个是加密货币的终结。在2018年我们了解了加密货币的技术概念。这些在2019年将可能会广泛应用在银行，商业和媒体等领域。</li>
-<li>屏幕时间服务：对社交媒体的过渡使用，同时在2018年发生的事故也让人们丧失了对社交媒体的信任。于是2019年，可能会降低对社交媒体的热情。此外，Apple的screen time，Android的Dashboard和像Hold这样的App的出现也是破冰标志。</li>
-<li>网络战：去年纰露的俄罗斯政府操纵2016选举的事情，还是有很大影响的。</li>
-<li>技术管制：2018年末FB数据泄漏事件的影响，美国开始向欧洲学习。2019政府拨款修订个人信息隐私条例。</li>
-<li>电动无人车：大部分的州已经出台了无人车规范，很多新车型也加入了可以完成自动驾驶的模块。但是，即便如此，在2018年，自动驾驶的传播度还是有限。在2019年可能是一个巨大的转折点。</li>
-<li>Apple移动设备领导地位有所动摇；</li>
-<li>5G技术</li>
-<li>机器人</li>
-<li>人脸识别与操作</li>
-<li>AR技术</li>
-</ol>
-<p>另外，可能的预测：</p>
-<ol>
-<li>USB-C可能会被应用到iPhone的生产上</li>
-<li>OTT流媒体服务在2019会继续扩大。</li>
-<li>2018年不道德地使用CRISPR技术进行基因编辑的实验可能只是个开始，2019可能会有更多的基因编辑的发现。</li>
-<li>中国拒绝其他国家的垃圾回收这一举措，可能促使垃圾处理技术的开发。</li>
-</ol>
-<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p><a href="https://medium.com/netflix-techblog/netflix-edge-load-balancing-695308b5548c" target="_blank" rel="noopener">Rethinking Netflix’s Edge Load Balancing</a><br>这篇文章介绍了Zuul 2的开发原因，原理和如何运作的。从zuul到zuul 2的改进等。</p>
-
           
+
+Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。
+Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。
+Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2019/01/07/2019-01-07/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -917,85 +844,20 @@
       
         
           
-            <hr>
-<ul>
-<li><code>Algorithm</code>：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。</li>
-<li><code>Review</code>：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。</li>
-<li><code>Tip</code>：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。</li>
-<li><code>Share</code>：主要是为了建立你的影响力，能够输出价值观。分享一篇有观点和思考的技术文章。</li>
-</ul>
-<hr>
-<h3 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h3><p><a href="leetcode.com/problems/trapping-rain-water/">Leetcode 42. Trapping Rain Water</a></p>
-<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.<br><img src="https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png" alt="Marcos"><br>The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. Thanks Marcos for contributing this image.</p>
-<blockquote>
-<p>Example:<br>  Input: [0,1,0,2,1,0,1,3,2,1,2,1]<br>  Output: 6</p>
-</blockquote>
-<p>首先暴力解法是从左到右遍历时，在第i位置时分别向左向右遍历，找到不小于当前高度的左边最大值left_max和右边最大值right_max，用当中最小值来减去当前高度，就是第i位置的蓄水量。time complexity是o(n ^ 2)，space complexity是o(1)。</p>
-<p>接下来，试图降低时间复杂度。从暴力解法中，我们要找到左边最大值和右边最大值，那么，我们可以从左向右遍历，从右向左遍历找到当前位置高度左边最大和右边最大，保存在数组left_max[]和right_max[]当中。这样我们最后从左遍历一遍用不小于当前高度的min(left_max[i], right_max[i]) - height[i]来得到当前蓄水量。这样我们的time complexity是o(n), 但是，space complexity是o(n)。</p>
-<p>最后看了discussion，双指针做法有o(n)的时间复杂度和o(1)的空间复杂度。原理是我们在找左边和右边的最大高度，用一个指针left从左向右走，一个指针right从右向左走，同时记录left指针遍历过的左边最大leftH和right指针遍历过的右边最大rightH。如果leftH &lt; rightH, 就用当前left指针所指高度与leftH对比，如果leftH &gt; height[left], 当前蓄水量是leftH - height[left]，否则就是0，并且把leftH替换成height[left]。<br>同理如果leftH &gt;= rightH，就用当前right指针所指高度与rightH对比，如果rightH &gt; height[right], 当前蓄水量是rightH - height[right]，否则就是0，并且把rightH替换成height[right]。 可以把leftH和rigthH想象成桶壁，我们要做的是选举桶壁，同时记录最大蓄水量。如果当前高度小于最矮桶壁，那么可以蓄水，如果出现新的高度高于前桶壁，那么就被选举成了新的桶壁。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * two pointers solution</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(height == <span class="keyword">null</span> || height.length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>, right = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> leftH = height[left], rightH = height[right];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(left &lt; right)&#123;</span><br><span class="line">            <span class="keyword">if</span>(leftH &lt; rightH)&#123;</span><br><span class="line">                left ++;</span><br><span class="line">                <span class="keyword">if</span>(leftH &gt; height[left])&#123;</span><br><span class="line">                    result += leftH - height[left];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    leftH = height[left];</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right --;</span><br><span class="line">                <span class="keyword">if</span>(rightH &gt; height[right])&#123;</span><br><span class="line">                    result += rightH - height[right];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    rightH = height[right];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Review"><a href="#Review" class="headerlink" title="Review"></a>Review</h3><p><a href="https://medium.com/pinterest-engineering/looking-inside-the-technology-that-powers-pinterest-2e8bd1cfc329" target="_blank" rel="noopener">Looking inside the technology that powers Pinterest</a><br>这篇文章介绍了Pinterest发展为一个拥有超过2.5亿用户的技术发展理念。</p>
-<p>上面写道他们的发展路程是不断的重建系统，有的时候甚至是紧急重建。所以他们精确设计的技术实现是建立在多次的危机和历史问题上的。</p>
-<p>去年，Pinterest明确并且编写了他们技术发展理念，总结下来有四个核心：Mission(使命)，Context(内容)，Strategy Principle(战略原则)，Technical Strategies(技术战略)。</p>
-<ul>
-<li><strong>Mission</strong><br>Pinterest技术策略的使命是能够匹配公司的使命：帮助人们发现他们所热爱的东西并且去实现。不会为了发展技术而去发展，相反，而是在支持Pinterest的使命基础上有目的地去发展。</li>
-<li><strong>Context</strong><br>用来衡量Pinterest的产业工程三个衡量变量：复杂的产品(Complex product)，资源(Resources)和野心(Ambition):</li>
-</ul>
-<ol>
-<li>Complex product<br>Pinterest针对不同的呈现页面有不同的实现方式，比如主页图片展示与图片搜索的算法不同，主页图片要更加个性化，而消费图片和广告图片也有不同的表现模式。普通图片和推广图片，二者在语料库的大小，周期和用户的交互模式也有所不同。</li>
-<li>Resources<br>作为拥有被成百上千万人使用的产品的成长中的公司，在Pinterest的每一个工程组能够获取更大的资源库。人员分配对于领导团队也是最重要的决定之一，因为总有很多新增的项目可以为用户，合作者以及Pinterest自身提高服务的质量。</li>
-<li>Ambition<br>在增加全球用户的同时，Pinterest的系统必须转向长期成长的轨道而不能局限在小的渐进的提高。</li>
-</ol>
-<ul>
-<li><strong>Strategy Principle</strong></li>
-</ul>
-<ol>
-<li>Simplicity &amp; Velocity ()<br>为了结合我们的工程原则，所有的项目都是从简单的开始然后迭代。我们的技术策略对于工程师团队来说是保证我们有一个清晰的，审慎的，同时又是灵活的指路明灯的基础。这个提供了对的方向的同时给予了我们足够的自由去采用最新的技术。我们建立的所有都需要支持快速的迭代。</li>
-<li>Scale():<br>我们为了使Pinterest扩大同时为未来数十亿用户和数万亿的图片量作准备而建立系统。我们的技术战略为了保证长期的考量同时抢占先机同时为未来的扩张而建立，而不是实现可能带来昂贵的重建的短期决定而建立的。</li>
-<li>Ownership():<br>通过保持我们的战略方向而不是严格地规定，我们鼓励工程师拥有平衡速度和质量的决定权。同时，策略本身是在公司内所有组里的工程师建议的基础上建立的。</li>
-<li>Resusability(复用原则):<br>当专注在正在处理的问题时，我们希望能够找到满足需求的其他的系统。我们团结起来一起建立 几乎一直 跨越内部界限，甚至跨越公司界限使用或者为开源项目作出贡献。我们认真思考如何把使用案例带给更多人使用。我们多方面思考复用同时在速度之间找到最佳平衡点</li>
-<li>Focused complexity():<br>在我们的领域我们是专业的，需要通晓Pinterest之外的技术。我们能够学习并选择争取的尖端技术并使用在我们选择复杂解决方案的关键领域。我们在非常慎重并且深入地理解利弊后我们接受复杂的方案。</li>
-</ol>
-<ul>
-<li><strong>Technical Strategies</strong><br>我们把这些理念呈现在下面每一个技术策略当中。为了避免不必要的对工程组的破坏我们通过来自技术主管合适的投入来发展这些技术。本着交互理念的精神，技术策略是有生命力的，也将会随着时间进化。</li>
-</ul>
-<p>下面是我们现在相对成熟或者还在探索中的技术策略：</p>
-<ol>
-<li><p>Machine Learning(机器学习)：<br>机器学习是Pinterest里许多组的关键技术。机器学习能够帮助我们最大化模型试验的速度。我们发展了单一训练模型，同时为我们根本业务和广告案例提供动力。根据这个策略发展的技术减少了建立新的以机器学习为基础的生产应用程序的障碍。</p>
-</li>
-<li><p>Content Distribution Infrastructure(内容分布式基础架构):<br>Pinterest大部分关键use case不论是原生内容还是付费内容都是基于用户的输入。这些实例的技术挑战是相通的，像低时延，支持大规模，避免系统分裂，等等。因此基于模块和使用模式的交集我们建立了允许复用和个性化的相结合地使用策略。其中，这些模块包括了增量更新的倒排索引，键值储存，分散集中层，和图片遍历架构等。</p>
-</li>
-<li><p>Data Management(数据管理):<br>Pinterest有强大的数据驱动的通过现实实践的决策的文化。为了保证我们工程和技术决策的正确，我们加强和维护关键业务数据的可靠性，提高程序员的生产力，并且提高数据管道的投资回报率。数据管理策略专注于数据管制、质量、发现和编码模式。</p>
-</li>
-<li><p>Data Processing(数据处理):<br>构建了庞大的数据管理模式后，这个模式就给特定的logging，查询处理，软件开发框架和数据处理系统一个方向。<br>Data Processing: Building off the broader data management strategy above, this track provides strategic direction on specific logging, query processing, programming frameworks and data processing systems.</p>
-</li>
-<li><p>Experimentation(实验):<br>我们迭代速度基于我们实验的速度。在实验性策略指导下，把我们实验基础架构和方法的演化设置为10倍的实践吞吐量。</p>
-</li>
-<li><p>Cloud(云服务):<br>云计划最初的目的是记录在2到4年的战略方法。清晰的基础架构方向将保证Pinterest保持高可用性，高恢复力，高性能，高使用率，高成本效率和可预测的。</p>
-</li>
-<li><p>Supported Languages(支持语言):<br>在Pinterest，我们使用多种编程语言，包括Java，Python，JavaScript，C++和Go。在我们工程师团队对于每一种语言都有一定程度支持。编程语言策略提供了一个能够快速，安全和低消耗地开发我们的产品的语言分析和建立语言支持的框架。</p>
-</li>
-<li><p>Core Client Platform(核心客户端平台):<br>这个技术规划了一个建立客户端技术可以产生一个快速注册用户的模式，与平台模式相结合，利用传统设备兼容性并且根据用户模式，网络情况和服务器响应的情况来快速响应。</p>
-</li>
-<li><p>API(API模式):<br>API模式所有的API和Pinterest的API端口提供了连贯和一致的方向。包括为被用户使用的产品功能提供服务的内部API和给合作方提供的外部API，第三方应用程序开发者和第三方产品集成的外部API。</p>
-</li>
-</ol>
-<p>这些技术是正在使用并且不断进化记录。当开始一个新的项目或者作为一个新手工程师可以把这个当作参考。这些策略同时能够帮助深入理解可能影响多个技术组织的技术问题。最后技术文档可以被用作与非技术人员的股东交流的方式。</p>
-<h3 id="Tips-Technologies"><a href="#Tips-Technologies" class="headerlink" title="Tips / Technologies"></a>Tips / Technologies</h3><p><a href="http://www.bigfastblog.com/geohash-intro" target="_blank" rel="noopener">Geohash</a><br>学习了Geohash算法，这个算法根据经纬度把地址转化成一串由数字和字母组成的字符串。当获得两个地址，不需要计算两个地址的直线距离，只要从把两个用Geohash转化来的字符串做对比，前面相同的字符越多，距离越近，大大减少了计算时间。</p>
-<p>从gitbook转到github了，分享我参考的文章<a href="https://zhuanlan.zhihu.com/p/26625249" target="_blank" rel="noopener">GitHub+Hexo 搭建个人网站详细教程</a></p>
-<h3 id="Share"><a href="#Share" class="headerlink" title="Share"></a>Share</h3><p>2019，新的开始，分享一个北大小姐姐的手帐！<a href="https://www.douban.com/group/topic/81867447/" target="_blank" rel="noopener">趁早效率手册+手帐=我所有看得见的生活</a></p>
-<p><code>新年要努力，不能得过且过!</code><br>新年FLAG：</p>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 经济独立</li>
-</ul>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 养一只宠物</li>
-</ul>
-<ul>
-<li style="list-style: none"><input type="checkbox"> 带父母旅游</li>
-</ul>
-
           
+
+Algorithm：主要是为了编程训练和学习。每周至少做一个 leetcode 的算法题。
+Review：主要是为了学习英文，需要你阅读并点评至少一篇英文技术文章。
+Tip：主要是为了总结和归纳你在是常工作中所遇到的知识点。学习至少一个技术技巧。你在工作中遇到的问题，踩过的坑，学习的点滴知识。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2018/12/31/2018-12-31/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1113,8 +975,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2018/12/30/test-my-site/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1232,17 +1101,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/FangRu.io/2018/12/30/hello-world/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
